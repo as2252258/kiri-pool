@@ -64,7 +64,11 @@ class Pool implements PoolInterface
 		if (!isset($this->_connections[$name])) {
 			throw new Exception('Channel is not exists.');
 		}
-		return $this->_connections[$name];
+		$channel = $this->_connections[$name];
+        if ($channel->isClose()) {
+            $channel->reconnect();
+        }
+        return $channel;
 	}
 
 

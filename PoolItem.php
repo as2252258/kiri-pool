@@ -38,6 +38,29 @@ class PoolItem
 
 
     /**
+     * @return bool
+     */
+    public function isClose(): bool
+    {
+        if ($this->_items instanceof Channel) {
+            return $this->_items->errCode == SWOOLE_CHANNEL_CLOSED;
+        }
+        return false;
+    }
+
+
+    /**
+     * @return void
+     */
+    public function reconnect(): void
+    {
+        if ($this->_items instanceof Channel && $this->_items->errCode == SWOOLE_CHANNEL_CLOSED) {
+            $this->_items = new Channel($this->maxCreated);
+        }
+    }
+
+
+    /**
      * @param Channel|SplQueue $items
      */
     public function setItems(Channel|SplQueue $items): void
