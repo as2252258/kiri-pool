@@ -95,12 +95,13 @@ class Pool implements PoolInterface
 
     /**
      * @param string $name
+     * @param int $waite_time
      * @return array
      * @throws Exception
      */
-    public function get(string $name): mixed
+    public function get(string $name, int $waite_time = 3): mixed
     {
-        return $this->channel($name)->pop();
+        return $this->channel($name)->pop($waite_time);
     }
 
 

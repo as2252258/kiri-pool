@@ -17,9 +17,10 @@ interface PoolInterface
 
     /**
      * @param string $name
+     * @param int $waite_time
      * @return mixed
      */
-    public function get(string $name): mixed;
+    public function get(string $name, int $waite_time): mixed;
 
 
     /**
