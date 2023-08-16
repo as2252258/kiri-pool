@@ -24,6 +24,13 @@ interface PoolInterface
 
     /**
      * @param string $name
+     * @return void
+     */
+    public function abandon(string $name): void;
+
+
+    /**
+     * @param string $name
      * @param mixed $data
      * @return void
      */

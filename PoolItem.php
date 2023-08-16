@@ -76,7 +76,7 @@ class PoolItem
     public function push(mixed $item): void
     {
         if (is_null($item)) {
-            $item = call_user_func($this->callback);
+            return;
         }
         $this->_items->push($item);
     }
@@ -127,12 +127,22 @@ class PoolItem
 
 
     /**
+     * @return void
+     */
+    public function abandon(): void
+    {
+        $this->created -= 1;
+    }
+
+
+    /**
      * @param int $waite
      * @return mixed
      */
     public function pop(int $waite = 10): mixed
     {
-        if ($this->_items->isEmpty()) {
+        if ($this->_items->isEmpty() && $this->created >= $this->maxCreated) {
+            $this->created += 1;
             return call_user_func($this->callback);
         } else {
             return $this->_items->pop($waite);
