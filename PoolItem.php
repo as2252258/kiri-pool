@@ -141,7 +141,7 @@ class PoolItem
      */
     public function pop(int $waite = 10): mixed
     {
-        if ($this->_items->isEmpty() && $this->created >= $this->maxCreated) {
+        if ($this->_items->isEmpty() && $this->created < $this->maxCreated) {
             $this->created += 1;
             return call_user_func($this->callback);
         } else {
