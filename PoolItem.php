@@ -23,6 +23,9 @@ class PoolItem
     private int $created = 0;
 
 
+    protected int $busy_total = 0;
+    protected int $idle_total = 0;
+
     /**
      * @param int $maxCreated
      * @param Closure|array $callback
