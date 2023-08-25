@@ -5,6 +5,7 @@ namespace Kiri\Pool;
 
 
 use Exception;
+use Kiri\Di\Context;
 
 
 /**
@@ -69,7 +70,7 @@ class Pool implements PoolInterface
             throw new Exception('Channel is not exists.');
         }
         $channel = $this->_connections[$name];
-        if ($channel == null || $channel->isClose()) {
+        if ($channel->isClose()) {
             $channel->reconnect();
         }
         return $channel;
@@ -189,11 +190,12 @@ class Pool implements PoolInterface
      */
     public function close(string $name): void
     {
-        $channel = $this->_connections[$name] ?? null;
-        if ($channel === null) {
+        if (!isset($this->_connections[$name])) {
             return;
         }
-        $this->_connections[$name] = null;
+        if (Context::inCoroutine()) {
+            $this->_connections[$name]->close();
+        }
     }
 
 
