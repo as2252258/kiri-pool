@@ -32,11 +32,7 @@ class PoolItem
      */
     public function __construct(readonly public int $maxCreated, readonly public Closure|array $callback)
     {
-        if (Coroutine::getCid() > -1) {
-            $this->_items = new Channel($this->maxCreated);
-        } else {
-            $this->_items = new SplQueue($this->maxCreated);
-        }
+        $this->reconnect();
     }
 
 
@@ -57,8 +53,10 @@ class PoolItem
      */
     public function reconnect(): void
     {
-        if ($this->_items instanceof Channel && $this->_items->errCode == SWOOLE_CHANNEL_CLOSED) {
+        if (Coroutine::getCid() > -1) {
             $this->_items = new Channel($this->maxCreated);
+        } else {
+            $this->_items = new SplQueue($this->maxCreated);
         }
     }
 

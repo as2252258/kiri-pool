@@ -26,6 +26,10 @@ class Pool implements PoolInterface
     public function flush($name, $retain_number): void
     {
         if ($this->hasChannel($name)) {
+            if ($retain_number == 0) {
+                $this->close($name);
+                return;
+            }
             $this->channel($name)->tailor($retain_number);
         }
     }
@@ -65,7 +69,7 @@ class Pool implements PoolInterface
             throw new Exception('Channel is not exists.');
         }
         $channel = $this->_connections[$name];
-        if ($channel->isClose()) {
+        if ($channel == null || $channel->isClose()) {
             $channel->reconnect();
         }
         return $channel;
@@ -189,8 +193,7 @@ class Pool implements PoolInterface
         if ($channel === null) {
             return;
         }
-        $channel->tailor(0);
-        $channel->close();
+        $this->_connections[$name] = null;
     }
 
 
