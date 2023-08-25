@@ -193,9 +193,7 @@ class Pool implements PoolInterface
         if (!isset($this->_connections[$name])) {
             return;
         }
-        if (Context::inCoroutine()) {
-            $this->_connections[$name]->close();
-        }
+        $this->_connections[$name]->close();
     }
 
 
