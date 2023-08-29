@@ -90,7 +90,7 @@ class Pool implements PoolInterface
     /**
      * @param string $name
      * @return void
-     * @throws Exception
+     * @throws
      */
     public function abandon(string $name): void
     {
