@@ -23,9 +23,6 @@ class PoolItem
     private int $created = 0;
 
 
-    protected int $busy_total = 0;
-    protected int $idle_total = 0;
-
     /**
      * @param int $maxCreated
      * @param Closure|array $callback
@@ -122,7 +119,6 @@ class PoolItem
                 $connection->stopHeartbeatCheck();
             }
             $connection = null;
-            $this->created -= 1;
         }
     }
 
@@ -142,8 +138,7 @@ class PoolItem
      */
     public function pop(int $waite = 10): mixed
     {
-        if ($this->_items->isEmpty() && $this->created < $this->maxCreated) {
-            $this->created += 1;
+        if ($this->_items->isEmpty()) {
             return call_user_func($this->callback);
         } else {
             return $this->_items->pop($waite);
