@@ -5,7 +5,6 @@ namespace Kiri\Pool;
 
 
 use Exception;
-use Kiri\Di\Context;
 
 
 /**
