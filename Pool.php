@@ -21,7 +21,7 @@ class Pool implements PoolInterface
     /**
      * @param $name
      * @param $retain_number
-     * @throws Exception
+     * @throws
      */
     public function flush($name, $retain_number): void
     {
@@ -61,7 +61,7 @@ class Pool implements PoolInterface
     /**
      * @param $name
      * @return PoolItem
-     * @throws Exception
+     * @throws
      */
     public function channel($name): PoolItem
     {
@@ -101,7 +101,7 @@ class Pool implements PoolInterface
      * @param string $name
      * @param int $waite_time
      * @return array
-     * @throws Exception
+     * @throws
      */
     public function get(string $name, int $waite_time = 3): mixed
     {
@@ -112,7 +112,7 @@ class Pool implements PoolInterface
     /**
      * @param $name
      * @return bool
-     * @throws Exception
+     * @throws
      */
     public function isNull($name): bool
     {
@@ -163,7 +163,7 @@ class Pool implements PoolInterface
     /**
      * @param string $name
      * @param mixed $data
-     * @throws Exception
+     * @throws
      */
     public function push(string $name, mixed $data): void
     {
@@ -175,7 +175,7 @@ class Pool implements PoolInterface
      * @param $name
      * @param int $time
      * @return array
-     * @throws Exception
+     * @throws
      */
     public function waite($name, int $time = 30): mixed
     {
@@ -185,7 +185,7 @@ class Pool implements PoolInterface
 
     /**
      * @param string $name
-     * @throws Exception
+     * @throws
      */
     public function close(string $name): void
     {
@@ -210,7 +210,7 @@ class Pool implements PoolInterface
      * @param string $name
      * @param mixed $client
      * @return void
-     * @throws Exception
+     * @throws
      */
     public function release(string $name, mixed $client): void
     {
